@@ -69,6 +69,7 @@ namespace TestExpressions
 
         }
 
+
         //Expression
         public static Expression IsPrime_Script(ParameterExpression value)
         {
@@ -142,9 +143,7 @@ namespace TestExpressions
                 Expression.Label(returnLabel, Expression.Constant(true))
             );
             return block;
-
-        }
-
+        }       
 
         [Fact]
         public void Test_IsPrimeNumber()
@@ -157,7 +156,7 @@ namespace TestExpressions
             Assert.False(IsPrime_Method(6));
             Assert.True(IsPrime_Method(7));
             Assert.False(IsPrime_Method(8));
-            Assert.False(IsPrime_Method(9));
+            Assert.False(IsPrime_Method(9));        //OK
             Assert.False(IsPrime_Method(10));
 
             Assert.True(IsPrime_Method(521));
@@ -181,8 +180,8 @@ namespace TestExpressions
             Assert.True(IsPrime_ReadableExpressions(5));
             Assert.False(IsPrime_ReadableExpressions(6));
             Assert.True(IsPrime_ReadableExpressions(7));
-            Assert.False(IsPrime_ReadableExpressions(8));
-            Assert.False(IsPrime_ReadableExpressions(9));
+            Assert.False(IsPrime_ReadableExpressions(8));            
+            Assert.False(IsPrime_ReadableExpressions(9));       //OK
             Assert.False(IsPrime_ReadableExpressions(10));
 
             Assert.True(IsPrime_ReadableExpressions(521));
@@ -193,6 +192,7 @@ namespace TestExpressions
 
             Assert.True(IsPrime_ReadableExpressions(541));
             Assert.False(IsPrime_ReadableExpressions(542));
+            
 
         }
 
@@ -205,15 +205,21 @@ namespace TestExpressions
             var func = expr.Compile();
 
 
-            //Assert.False(func(1));
-            //Assert.True(func(2));
-            //Assert.True(func(3));
-            //Assert.False(func(4));
-            //Assert.True(func(5));
-            //Assert.False(func(6));
-            //Assert.True(func(7));
-            //Assert.False(func(8));            
-            //Assert.False(func(9));   //<--  System.DivideByZeroException STARTING FROM HERE
+            Assert.False(func(1));
+            Assert.True(func(2));
+            Assert.True(func(3));
+            Assert.False(func(4));
+            Assert.True(func(5));
+            Assert.False(func(6));
+            Assert.True(func(7));
+            Assert.False(func(8));
+
+            //*****************************************
+            //Start throwing DivideByZeroException from
+            //this point and only for odd numbers.
+            //*****************************************
+
+            //Assert.False(func(9));   
             //Assert.False(func(10));
 
             //Assert.True(func(521));
@@ -224,7 +230,7 @@ namespace TestExpressions
 
             //Assert.True(func(541));
             //Assert.False(func(542));
-            
+
         }
     }
 }
