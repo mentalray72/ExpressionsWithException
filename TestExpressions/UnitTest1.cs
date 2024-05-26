@@ -23,7 +23,7 @@ namespace TestExpressions
         //Expression captured from ReadableExpression v4.6.0
         public static bool IsPrime_ReadableExpressions(int n)
         {
-            Func<int, bool> func =
+            Func<int, bool> funcIsPrime =
                 value =>
                 {
                     bool result;
@@ -65,7 +65,7 @@ namespace TestExpressions
                     return true;
                 };
 
-            return func(n);
+            return funcIsPrime(n);
 
         }
 
@@ -202,34 +202,34 @@ namespace TestExpressions
             var value = Expression.Parameter(typeof(int), "value");
             var result = IsPrime_Script(value);
             var expr = Expression.Lambda<Func<int, bool>>(result, value);
-            var func = expr.Compile();
+            var funcIsPrime = expr.Compile();
 
 
-            Assert.False(func(1));
-            Assert.True(func(2));
-            Assert.True(func(3));
-            Assert.False(func(4));
-            Assert.True(func(5));
-            Assert.False(func(6));
-            Assert.True(func(7));
-            Assert.False(func(8));
+            Assert.False(funcIsPrime(1));
+            Assert.True(funcIsPrime(2));
+            Assert.True(funcIsPrime(3));
+            Assert.False(funcIsPrime(4));
+            Assert.True(funcIsPrime(5));
+            Assert.False(funcIsPrime(6));
+            Assert.True(funcIsPrime(7));
+            Assert.False(funcIsPrime(8));
 
             //*****************************************
             //Start throwing DivideByZeroException from
             //this point and only for odd numbers.
             //*****************************************
 
-            //Assert.False(func(9));   
-            //Assert.False(func(10));
+            Assert.False(funcIsPrime(9));   
+            Assert.False(funcIsPrime(10));
 
-            //Assert.True(func(521));
-            //Assert.False(func(522));
+            Assert.True(funcIsPrime(521));
+            Assert.False(funcIsPrime(522));
 
-            //Assert.True(func(523));
-            //Assert.False(func(524));
+            Assert.True(funcIsPrime(523));
+            Assert.False(funcIsPrime(524));
 
-            //Assert.True(func(541));
-            //Assert.False(func(542));
+            Assert.True(funcIsPrime(541));
+            Assert.False(funcIsPrime(542));
 
         }
     }
